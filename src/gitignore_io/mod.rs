@@ -16,13 +16,14 @@ pub async fn get_template_names() -> Result<Vec<String>, Error> {
     Ok(vec)
 }
 
-pub async fn get_template(template_names: Vec<&str>) -> Result<String, Error> {
+pub async fn get_template(template_names: &Vec<&str>) -> Result<String, Error> {
     let response = invoke_api(&template_names.join(",")).await?;
     Ok(response)
 }
 
 async fn invoke_api(method: &str) -> Result<String, Error> {
-    let url = format!("https://www.toptal.com/developers/gitignore/api/{}", method).parse().unwrap();
+    let url_string = format!("https://www.toptal.com/developers/gitignore/api/{}", method);
+    let url = url_string.parse().unwrap();
 
     let connector = HttpsConnector::new();
     let client = Client::builder().build::<_, hyper::Body>(connector);
@@ -34,5 +35,5 @@ async fn invoke_api(method: &str) -> Result<String, Error> {
 
         return Ok(String::from_utf8(bytes.to_vec()).unwrap());
     }
-    Err(Error::new(&response.status().to_string()))
+    Err(Error::new(format!("{}", response.status())))
 }
