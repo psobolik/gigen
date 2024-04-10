@@ -38,7 +38,7 @@ async fn print_template_name_list() {
             }
         }
         Err(error) => {
-            println!("Problem getting list of templates: {}", error.to_string())
+            println!("Problem getting list of templates: {}", error)
         },
     };
 }
@@ -50,7 +50,7 @@ async fn print_gitignore(template_name_list: Vec<&str>) {
             println!("{}", result);
         }
         Err(error) => {
-            println!(r#"Problem getting .gitignore for "{}": {}"#, template_name_list.join(" "), error.to_string())
+            println!(r#"Problem getting .gitignore for "{}": {}"#, template_name_list.join(" "), error)
         },
     };
 }

@@ -16,7 +16,7 @@ pub async fn get_template_names() -> Result<Vec<String>, Error> {
     Ok(vec)
 }
 
-pub async fn get_template(template_names: &Vec<&str>) -> Result<String, Error> {
+pub async fn get_template(template_names: &[&str]) -> Result<String, Error> {
     let response = invoke_api(&template_names.join(",")).await?;
     Ok(response)
 }
